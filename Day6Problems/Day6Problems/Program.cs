@@ -1,41 +1,59 @@
-﻿static Boolean isPresent(int[] arr, int num) //this method checks whether the no is already present in array or not
+﻿using System;
+using System.Diagnostics;
+
+Stopwatch timer = new Stopwatch(); // creating a object of StopWatch class
+static Boolean startStopwatch(Stopwatch timer) // this function is to start the stopwatch 
 {
-    for (int i = 0; i < arr.Length; i++) // for loop is used so we can compare the value present in num with each value present in array
+    Console.WriteLine("Enter 1 to start the stopwatch:");
+    int startOption = int.Parse(Console.ReadLine()); // from user we are getting a input to start the timer
+    if (startOption == 1) // if startOption value is equals to 1 then only the timer will start and return true or else false
     {
-        if (arr[i] == num)  //if this condition becomes true it means that num is present in array and will return value true
-        {
-            return true;
-        }
+        timer.Start();
+        return true;
     }
-    return false;
+    else
+    {
+        return false;
+    }
+
 }
-static void generateCouponCode(int totalNum)
+static Boolean stopStopwatch(Stopwatch timer) // this function is use to stop the stopwatch
 {
-    int[] couponCode = new int[totalNum];  //creating a array to store the distinct coupon code
-    int randomNo = 0, count = 0;
-    Boolean check;
-    Random random = new Random();
-    for (int i = 0; i < couponCode.Length; i++) // for loop is used to generate n no of random number
+    Console.WriteLine("Enter 2 to stop the stopwatch:");
+    int startOption = int.Parse(Console.ReadLine());// from user we are getting a input to stop the timer
+    if (startOption == 2) //if stopOption value is equals to 2 then only the timer will stop and return true or else false
     {
-        randomNo = random.Next(1000, 10000);
-        count++;
-        check = isPresent(couponCode, randomNo); //the value true or false return from isPresent function is store in check variable
-        if (check != true) // if this condition becomes true then it means the value is not already present in array and stores in couponCode array
-        {
-            couponCode[i] = randomNo;
-        }
-        else
-        {
-            --i; // if condition becomes false it means the number is already present in array and decrements the value of i so we can store the next value in same current index
-        }
+        timer.Stop();
+        return true;
     }
-    Console.WriteLine("The unique coupon numbers are :");
-    for (int i = 0; i < couponCode.Length; i++) //this for loop is used to print the values in array one by one
+    else
     {
-        Console.WriteLine(couponCode[i] + " ");
+        return false;
     }
-    Console.WriteLine("Total random number needed to have all distinct numbers are : " + count);
+
 }
-Console.Write("Enter the number of coupon codes to be generated : ");
-int totalNum = int.Parse(Console.ReadLine());  //taking value of n from user
-generateCouponCode(totalNum); // calling the function
+static void elapsedTime(Stopwatch timer) // this function will call the start and stop timer functions and calculate elapsed time
+{
+    Boolean start = startStopwatch(timer); // the value returned from startStopwatch function is stored in start
+    if (start) // if start is equals to true it means timer is started and go inside if statement
+    {
+        Console.WriteLine("Timer started");
+        Boolean stop = stopStopwatch(timer);// the value returned from stopStopwatch function is stored in stop
+        if (stop)// if stop is equals to true it means timer is stoped and go inside if statement
+        {
+            Console.WriteLine("Timer stopped");
+            Console.WriteLine("The Elapsed time is " + timer.Elapsed); //the elapsed time between start and stop is displayed
+        }
+        else // the input didn't match that's why it came to else part and display the msg
+        {
+            Console.WriteLine("Wrong input... Timer didn't stop");
+        }
+    }
+    else// the input didn't match that's why it came to else part and display the msg
+    {
+        Console.WriteLine("Wrong input... Timer didn't start");
+    }
+
+
+}
+elapsedTime(timer); // elapsedTime method is called
